@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Sign Up</title>
+
+<link rel="stylesheet" href="project.css">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+<h1>Create Account</h1>
+
+<form id="signupForm">
+
+<label>Username :</label>
+<input type="text" id="newUsername" required>
+
+<label>Email :</label>
+<input type="email" id="newEmail" required>
+
+<label>Password :</label>
+<input type="password" id="newPassword" required>
+
+<label>Confirm Password :</label>
+<input type="password" id="confirmPassword" required>
+
+<button type="submit">Sign Up</button>
+
+<p>Already have account? <a href="login.html">Login</a></p>
+
+</form>
+
+</div>
+
+
+<script>
+
+document.getElementById("signupForm")
+
+.addEventListener("submit", function(event){
+
+event.preventDefault();
+
+let username =
+document.getElementById("newUsername").value;
+
+let email =
+document.getElementById("newEmail").value;
+
+let password =
+document.getElementById("newPassword").value;
+
+let confirmPassword =
+document.getElementById("confirmPassword").value;
+
+
+// validation
+if(username.length < 3)
+{
+alert("Username must be 3 characters");
+return;
+}
+
+if(password.length < 6)
+{
+alert("Password must be 6 characters");
+return;
+}
+
+if(password != confirmPassword)
+{
+alert("Passwords do not match");
+return;
+}
+
+
+// save data
+localStorage.setItem("username", username);
+
+localStorage.setItem("email", email);
+
+localStorage.setItem("password", password);
+
+
+alert("Signup successful ✅");
+
+// redirect to login page
+window.location.href="login.html";
+
+});
+
+</script>
+
+</body>
+
+</html>

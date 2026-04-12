@@ -1,0 +1,41 @@
+[
+{
+"title":"Data Structures Notes",
+"author":"Rahul",
+"pages":"120",
+"year":"2023",
+"image":"https://picsum.photos/80/100?11"
+},
+
+{
+"title":"Operating Systems Notes",
+"author":"Priya",
+"pages":"95",
+"year":"2024",
+"image":"https://picsum.photos/80/100?12"
+},
+
+{
+"title":"Computer Networks Notes",
+"author":"Arjun",
+"pages":"110",
+"year":"2022",
+"image":"https://picsum.photos/80/100?13"
+},
+
+{
+"title":"Database Management Notes",
+"author":"Sneha",
+"pages":"130",
+"year":"2023",
+"image":"https://picsum.photos/80/100?14"
+},
+
+{
+"title":"Machine Learning Notes",
+"author":"Vikram",
+"pages":"140",
+"year":"2024",
+"image":"https://picsum.photos/80/100?15"
+}
+]

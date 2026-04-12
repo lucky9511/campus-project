@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Upload</title>
+
+<link rel="stylesheet" href="project.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<h2>Upload Resource</h2>
+
+<ul>
+
+<li><a href="index.html">Home</a></li>
+<li><a href="resources.html">Resources</a></li>
+<li><a href="tools.html">Tools</a></li>
+<li><a href="upload.html">Upload</a></li>
+
+</ul>
+
+</nav>
+
+
+<h1>Upload Notes or Books</h1>
+
+
+<form>
+
+<label>Title</label>
+
+<input type="text" id="title">
+
+
+<label>Type</label>
+
+<select id="type">
+
+<option>Book</option>
+<option>Note</option>
+
+</select>
+
+
+<label>File</label>
+
+<input type="file">
+
+
+<button type="button" onclick="upload()">Upload</button>
+
+</form>
+
+
+<p id="msg"></p>
+
+
+<script src="upload.js"></script>
+
+</body>
+
+</html>
