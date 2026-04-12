@@ -1,89 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Campus Resource Sharing</title>
-<link rel="stylesheet" href="style.css">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Hub - Resource Sharing</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <style>
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* --- Hero Section & Video --- */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Video Background */
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+        }
+
+        /* Gradient Overlay to make text pop */
+        .video-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.5) 100%);
+            z-index: -1;
+        }
+
+        /* --- Navbar (Glassmorphism) --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding: 1rem 5%;
+        }
+
+        .navbar.scrolled .logo, .navbar.scrolled .nav-links a {
+            color: #0f172a;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .logo i {
+            color: #3b82f6;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #f1f5f9;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+
+        .nav-links .btn-login {
+            background: #3b82f6;
+            color: white !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .nav-links .btn-login:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* --- Hero Content --- */
+        .hero-content {
+            text-align: center;
+            color: #ffffff;
+            z-index: 10;
+            max-width: 800px;
+            padding: 0 2rem;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1.5px;
+            background: linear-gradient(to right, #ffffff, #e0f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: #cbd5e1;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(59, 130, 246, 0.4);
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            color: #ffffff;
+        }
+
+        /* --- Features Section --- */
+        .features-section {
+            padding: 6rem 5%;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .features-section h2 {
+            font-size: 2.8rem;
+            color: #0f172a;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .features-section .subtitle {
+            color: #64748b;
+            font-size: 1.15rem;
+            margin-bottom: 4rem;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-color: transparent;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: #eff6ff;
+            color: #3b82f6;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .icon-box {
+            transform: scale(1.1) rotate(5deg);
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            color: #0f172a;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 4rem 1rem;
+            border-top: 1px solid #1e293b;
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        footer i {
+            color: #ef4444;
+            margin: 0 5px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3rem; }
+            .hero-controls { flex-direction: column; }
+            .nav-links { display: none; } /* Simplified mobile view */
+            .navbar { padding: 1rem 5%; }
+            .logo { font-size: 1.2rem; }
+        }
+    </style>
+</head>
 <body>
 
-<!-- VIDEO BACKGROUND -->
-<div class="video-container">
+    <!-- VIDEO HERO SECTION -->
+    <section class="hero-section">
+        <!-- Video Background -->
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="campus-bg.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Dark Gradient Overlay -->
+        <div class="video-overlay"></div>
 
+        <!-- NAVBAR -->
+        <nav class="navbar" id="navbar">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-layer-group"></i> CampusHub
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="upload.html">Upload</a></li>
+                <li><a href="login.html" class="btn-login">Sign In</a></li>
+            </ul>
+        </nav>
 
-<video autoplay muted loop class="background-video">
-<source src="campus-bg.mp4" type="video/mp4">
-</video>
+        <!-- HERO CONTENT -->
+        <div class="hero-content">
+            <h1>Empower Your <br> Campus Learning</h1>
+            <p>A unified platform to share books, notes, assignments, and academic tools seamlessly with your college community. Connect and grow together.</p>
+            
+            <div class="hero-controls">
+                <a href="resources.html" class="btn-primary">Explore Resources</a>
+                <a href="upload.html" class="btn-secondary">Upload Material</a>
+            </div>
+        </div>
+    </section>
 
-<div class="overlay"></div>
+    <!-- EXPLORE FEATURES SECTION -->
+    <section class="features-section">
+        <h2>What We Offer</h2>
+        <p class="subtitle">Everything you need to excel in your academics, collected in one place.</p>
+        
+        <div class="card-container">
+            <!-- Books Card -->
+            <a href="books.html" class="feature-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <h3>Academic Books</h3>
+                <p>Easily share, request, and borrow textbooks and literature from seniors and peers reducing your academic expenses.</p>
+            </a>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-<div class="logo">
-Campus Resource Sharing & Optimization Platform
-</div>
-<ul class="nav-links">
-<li><a href="index.html">Home</a></li>
-<li><a href="resources.html">Resources</a></li>
-<li><a href="upload.html">Upload</a></li>
-<li><a href="login.html">Login</a></li>
-</ul>
-</nav>
+            <!-- Notes Card -->
+            <a href="notes.html" class="feature-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-file-pen"></i>
+                </div>
+                <h3>Study Notes</h3>
+                <p>Access high-quality, peer-reviewed handwritten or digital notes for every subject and semester on campus.</p>
+            </a>
 
-<!-- HERO SECTION -->
-<div class="hero-content">
+            <!-- Tools Card -->
+            <a href="tools.html" class="feature-card">
+                <div class="icon-box">
+                    <i class="fa-solid fa-compass-drafting"></i>
+                </div>
+                <h3>Student Tools</h3>
+                <p>Borrow physical academic tools like drafters, calculators, or quickly use our integrated digital calculators online.</p>
+            </a>
+        </div>
+    </section>
 
-<h1>Share Books, Notes & Tools</h1>
+    <!-- FOOTER -->
+    <footer>
+        <p>Proudly created by students of Swami Keshvanand Institute of Technology, Jaipur</p>
+        <p style="margin-top: 10px; font-size: 0.9rem;">Made with <i class="fa-solid fa-heart"></i> for the community.</p>
+    </footer>
 
-<p>Connect, Share & Learn Together Within Your Campus</p>
-<a href = "login.html">
-<button class="explore-btn">Explore Resources</button>
-</a>
-</div>
-</div>
-
-<!-- RESOURCE CARDS -->
-<section class="resources">
-<h2>Explore Campus Resources</h2>
-<div class="card-container">
-<div class="card">
-<h3>📚 Books</h3>
-<p>Share and borrow academic textbooks easily</p>
-<a href="books.html">
-<button>View Books</button>
-</a>
-</div>
-
-<div class="card">
-<h3>📝 Notes</h3>
-<p>Access handwritten notes and study materials</p>
-<a href="notes.html">
-<button>View Notes</button>
-</a>
-</div>
-
-<div class="card">
-<h3>🧰 Tools</h3>
-<p>Borrow tools like compass, drafter & calculators</p>
-<a href="tools.html">
-<button>View Tools</button>
-</a>
-</div>
-
-</div>
-
-</section>
-
-
-<!-- FOOTER -->
-<footer>
-
-<p>Swami Keshvanand Institute of Technology, Jaipur</p>
-
-</footer>
-
-
+    <!-- INTERACTION LOGIC (Scroll effect for navbar) -->
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
