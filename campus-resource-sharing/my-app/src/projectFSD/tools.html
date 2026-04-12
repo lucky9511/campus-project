@@ -1,50 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Tools</title>
+    <!-- Use Lato font for clean, minimal text -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Setup */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+        }
 
-<meta charset="UTF-8">
+        body {
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
 
-<title>Tools</title>
+        /* Navigation */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1rem;
+            text-align: center;
+        }
 
-<link rel="stylesheet" href="project.css">
+        nav a {
+            text-decoration: none;
+            color: #555;
+            margin: 0 1rem;
+            font-weight: 700;
+        }
 
+        nav a:hover, nav a.active {
+            color: #4CAF50; /* Light green accent */
+        }
+
+        /* Header Area */
+        header {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        header h1 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Tool Box Styling */
+        .tool-box {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center; /* Center content */
+        }
+
+        .tool-box h2 {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+
+        input, select {
+            width: 100%;
+            max-width: 300px;
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin: 0 auto;
+            display: block;
+        }
+
+        button {
+            background-color: #e3f2fd; /* Light blue accent */
+            color: #1976d2; 
+            border: 1px solid #bbdefb;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.3rem;
+        }
+
+        button:hover {
+            background-color: #bbdefb;
+        }
+
+        .calc-btn-group button {
+            width: 80px;
+        }
+
+        /* Results Display */
+        .result {
+            max-width: 300px;
+            margin: 1rem auto 0;
+            padding: 1rem;
+            background-color: #f1f8e9; /* Light green accent */
+            border: 1px solid #c5e1a5;
+            color: #33691e;
+            border-radius: 4px;
+            font-weight: bold;
+            display: none; /* hidden by default */
+        }
+
+        .error {
+            background-color: #ffebee;
+            border-color: #ffcdd2;
+            color: #c62828;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+            .tool-box {
+                padding: 1rem;
+            }
+            .calc-btn-group button {
+                width: 100%;
+                max-width: 300px;
+                display: block;
+                margin: 0.5rem auto;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<nav>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="resources.html">Resources</a>
+        <a href="tools.html" class="active">Tools</a>
+        <a href="upload.html">Upload</a>
+    </nav>
 
-<h2>Student Tools</h2>
+    <header>
+        <h1>Student Tools</h1>
+        <p>Easy tools for everyday student needs</p>
+    </header>
 
-<ul>
+    <div class="container">
+        
+        <!-- 1. Percentage Calculator -->
+        <div class="tool-box">
+            <h2>Percentage Calculator</h2>
+            <div class="input-group">
+                <label for="obtainedMarks">Obtained Marks</label>
+                <input type="number" id="obtainedMarks" placeholder="e.g. 450">
+            </div>
+            <div class="input-group">
+                <label for="totalMarks">Total Marks</label>
+                <input type="number" id="totalMarks" placeholder="e.g. 500">
+            </div>
+            <button onclick="calculatePercentage()">Calculate</button>
+            <div id="percResult" class="result"></div>
+        </div>
 
-<li><a href="index.html">Home</a></li>
-<li><a href="resources.html">Resources</a></li>
-<li><a href="tools.html">Tools</a></li>
-<li><a href="upload.html">Upload</a></li>
+        <!-- 2. Unit Converter -->
+        <div class="tool-box">
+            <h2>Unit Converter</h2>
+            <div class="input-group">
+                <label for="unitValue">Enter Value</label>
+                <input type="number" id="unitValue" placeholder="Value to convert">
+            </div>
+            <div class="input-group">
+                <label for="conversionType">Convert</label>
+                <select id="conversionType">
+                    <option value="cm_m">Centimeters to Meters</option>
+                    <option value="m_cm">Meters to Centimeters</option>
+                    <option value="m_km">Meters to Kilometers</option>
+                    <option value="km_m">Kilometers to Meters</option>
+                </select>
+            </div>
+            <button onclick="convertUnits()">Convert</button>
+            <div id="unitResult" class="result"></div>
+        </div>
 
-</ul>
+        <!-- 3. Basic Calculator -->
+        <div class="tool-box">
+            <h2>Basic Calculator</h2>
+            <div class="input-group">
+                <label for="num1">First Number</label>
+                <input type="number" id="num1" placeholder="0">
+            </div>
+            <div class="input-group">
+                <label for="num2">Second Number</label>
+                <input type="number" id="num2" placeholder="0">
+            </div>
+            <div class="calc-btn-group">
+                <button onclick="calculateBasic('+')">Add</button>
+                <button onclick="calculateBasic('-')">Subtract</button>
+                <button onclick="calculateBasic('*')">Multiply</button>
+                <button onclick="calculateBasic('/')">Divide</button>
+            </div>
+            <div id="calcResult" class="result"></div>
+        </div>
 
-</nav>
+    </div>
 
+    <!-- Application Logic -->
+    <script>
+        // Helper function to display messages
+        function showMessage(elementId, message, isError = false) {
+            const el = document.getElementById(elementId);
+            el.style.display = 'block';
+            el.innerHTML = message;
+            if (isError) {
+                el.classList.add('error');
+            } else {
+                el.classList.remove('error');
+            }
+        }
 
-<h1>Useful Tools</h1>
+        // Percentage Tool Logic
+        function calculatePercentage() {
+            const obtained = parseFloat(document.getElementById('obtainedMarks').value);
+            const total = parseFloat(document.getElementById('totalMarks').value);
 
+            if (isNaN(obtained) || isNaN(total)) {
+                showMessage('percResult', 'Please fill in both fields with numbers.', true);
+                return;
+            }
+            if (total === 0) {
+                showMessage('percResult', 'Total marks cannot be zero.', true);
+                return;
+            }
 
-<div class="card">
+            const percentage = ((obtained / total) * 100).toFixed(2);
+            showMessage('percResult', `Result: ${percentage}%`);
+        }
 
-<h3>CGPA Calculator</h3>
+        // Unit Converter Tool Logic
+        function convertUnits() {
+            const value = parseFloat(document.getElementById('unitValue').value);
+            const convType = document.getElementById('conversionType').value;
 
-<input type="number" id="marks">
+            if (isNaN(value)) {
+                showMessage('unitResult', 'Please enter a valid number.', true);
+                return;
+            }
 
-<button onclick="calc()">Calculate</button>
+            let result = 0;
+            let resultText = '';
 
-<p id="result"></p>
+            // Perform simple division or multiplication based on selected conversion rule
+            if (convType === 'cm_m') {
+                result = value / 100;
+                resultText = `${value} cm = ${result} m`;
+            } else if (convType === 'm_cm') {
+                result = value * 100;
+                resultText = `${value} m = ${result} cm`;
+            } else if (convType === 'm_km') {
+                result = value / 1000;
+                resultText = `${value} m = ${result} km`;
+            } else if (convType === 'km_m') {
+                result = value * 1000;
+                resultText = `${value} km = ${result} m`;
+            }
 
-</div>
+            showMessage('unitResult', resultText);
+        }
 
+        // Basic Math Calculator Tool Logic
+        function calculateBasic(operator) {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
 
-<script src="tools.js"></script>
+            if (isNaN(num1) || isNaN(num2)) {
+                showMessage('calcResult', 'Please fill in both numbers.', true);
+                return;
+            }
 
+            let result = 0;
+            
+            // Execute the operation
+            if (operator === '+') result = num1 + num2;
+            if (operator === '-') result = num1 - num2;
+            if (operator === '*') result = num1 * num2;
+            if (operator === '/') {
+                if (num2 === 0) {
+                    showMessage('calcResult', 'Cannot divide by zero.', true);
+                    return;
+                }
+                result = num1 / num2;
+            }
+
+            showMessage('calcResult', `Result: ${result}`);
+        }
+    </script>
 </body>
 </html>

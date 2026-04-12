@@ -1,46 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Resources</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<link rel="stylesheet" href="project.css">
-<link rel="stylesheet" href="books.css">
-<link rel="stylesheet" href="notes.css">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --accent-color: #6c5ce7;
+            --accent-hover: #5b4bc4;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --border-color: #eee;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-hover: 0 10px 20px rgba(108, 92, 231, 0.15);
+            --transition: all 0.3s ease;
+        }
 
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #f1f1f1;
+            --card-bg: #1e1e1e;
+            --nav-bg: rgba(30, 30, 30, 0.95);
+            --border-color: #333;
+            --shadow: 0 4px 6px rgba(0,0,0,0.2);
+            --shadow-hover: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-color);
+        }
+
+        /* Header / Hero Section */
+        header {
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Controls: Search and Filters */
+        .controls {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-bar input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: gray;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-color);
+            color: white;
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Resources Grid */
+        .resources-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .resource-card:nth-child(1) { animation-delay: 0.1s; }
+        .resource-card:nth-child(2) { animation-delay: 0.2s; }
+        .resource-card:nth-child(3) { animation-delay: 0.3s; }
+        .resource-card:nth-child(4) { animation-delay: 0.4s; }
+        .resource-card:nth-child(5) { animation-delay: 0.5s; }
+        .resource-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .resource-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-color);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .resource-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .resource-card:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        .card-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            padding: 0.8rem;
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .card-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<nav>
+    <!-- Navbar -->
+    <nav>
+        <a href="index.html" class="nav-brand">
+            <i class="fa-solid fa-graduation-cap"></i> Campus Hub
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="resources.html" class="active">Resources</a></li>
+            <li><a href="tools.html">Tools</a></li>
+            <li><a href="upload.html">Upload</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </li>
+        </ul>
+    </nav>
 
-<h2>Campus Resources</h2>
+    <!-- Header Section -->
+    <header>
+        <h1>Resource Center</h1>
+        <p>Discover documentation, tutorials, tools, and videos to supercharge your learning journey on campus.</p>
+    </header>
 
-<ul>
+    <!-- Controls Section -->
+    <div class="controls">
+        <div class="search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search resources...">
+        </div>
+        
+        <div class="filters" id="filterContainer">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="docs">Documentation</button>
+            <button class="filter-btn" data-filter="tutorials">Tutorials</button>
+            <button class="filter-btn" data-filter="tools">Tools</button>
+            <button class="filter-btn" data-filter="videos">Videos</button>
+        </div>
+    </div>
 
-<li><a href="index.html">Home</a></li>
-<li><a href="resources.html">Resources</a></li>
-<li><a href="tools.html">Tools</a></li>
-<li><a href="upload.html">Upload</a></li>
+    <!-- Resources Grid -->
+    <div class="resources-container" id="resourcesGrid">
+        <!-- Cards will be populated by JS -->
+    </div>
 
-</ul>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Campus Hub. All rights reserved.</p>
+    </footer>
 
-</nav>
+    <!-- JavaScript -->
+    <script>
+        // Resource Data
+        const resources = [
+            {
+                id: 1,
+                title: "Web Development Guide",
+                category: "docs",
+                categoryLabel: "Documentation",
+                desc: "A comprehensive guide to modern web development standards and best practices.",
+                icon: "fa-solid fa-book",
+                link: "#"
+            },
+            {
+                id: 2,
+                title: "React JS Crash Course",
+                category: "videos",
+                categoryLabel: "Videos",
+                desc: "Learn the fundamentals of React JS in this detailed video series.",
+                icon: "fa-solid fa-video",
+                link: "#"
+            },
+            {
+                id: 3,
+                title: "Code Formatting Check",
+                category: "tools",
+                categoryLabel: "Tools",
+                desc: "An automated tool to instantly format and lint your project codebase.",
+                icon: "fa-solid fa-wrench",
+                link: "#"
+            },
+            {
+                id: 4,
+                title: "Advanced Git Tutorial",
+                category: "tutorials",
+                categoryLabel: "Tutorials",
+                desc: "Master version control with step-by-step interactive Git examples.",
+                icon: "fa-solid fa-laptop-code",
+                link: "#"
+            },
+            {
+                id: 5,
+                title: "Campus API Reference",
+                category: "docs",
+                categoryLabel: "Documentation",
+                desc: "Official API reference documentation for the campus backend endpoints.",
+                icon: "fa-regular fa-file-code",
+                link: "#"
+            },
+            {
+                id: 6,
+                title: "Design System Kit",
+                category: "tools",
+                categoryLabel: "Tools",
+                desc: "UI components and Figma assets to keep your projects visually consistent.",
+                icon: "fa-solid fa-pen-nib",
+                link: "#"
+            }
+        ];
 
+        const grid = document.getElementById('resourcesGrid');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const themeToggleBtn = document.getElementById('themeToggle');
 
-<h1>Available Resources</h1>
+        // Render Cards
+        function renderCards(data) {
+            grid.innerHTML = '';
+            
+            if(data.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; opacity: 0.6;">No resources found matching your criteria.</p>';
+                return;
+            }
 
-<h2>Books</h2>
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.classList.add('resource-card');
+                // Ensure fresh animation for filtered items
+                card.style.animationDelay = \`\${index * 0.1}s\`;
+                
+                card.innerHTML = \`
+                    <div class="card-icon">
+                        <i class="\${item.icon}"></i>
+                    </div>
+                    <div class="card-category">\${item.categoryLabel}</div>
+                    <h3 class="card-title">\${item.title}</h3>
+                    <p class="card-desc">\${item.desc}</p>
+                    <a href="\${item.link}" class="card-btn">View Resource</a>
+                \`;
+                grid.appendChild(card);
+            });
+        }
 
-<div id="booksContainer"></div>
+        // Search and Filter Logic
+        let currentFilter = 'all';
+        let searchQuery = '';
 
+        function filterResources() {
+            const filteredData = resources.filter(item => {
+                const matchesFilter = currentFilter === 'all' || item.category === currentFilter;
+                const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                      item.desc.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+            renderCards(filteredData);
+        }
 
-<h2>Notes</h2>
+        // Event Listeners for Filters
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Update active state
+                filterBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                currentFilter = e.target.getAttribute('data-filter');
+                filterResources();
+            });
+        });
 
-<div id="notesContainer"></div>
+        // Event Listener for Search
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            filterResources();
+        });
 
+        // Dark Mode Toggle Logic
+        let isDarkMode = localStorage.getItem('theme') === 'dark';
+        
+        function updateTheme() {
+            if (isDarkMode) {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.removeAttribute('data-theme');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        }
 
-<script src="resources.js"></script>
+        themeToggleBtn.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            updateTheme();
+        });
 
+        // Initial Initialization
+        updateTheme();
+        renderCards(resources);
+
+    </script>
 </body>
 </html>
