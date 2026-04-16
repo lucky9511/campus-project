@@ -1,0 +1,9 @@
+
+> campus-resource-sharing@1.0.0 backend
+> npm --prefix backend start
+
+
+> project-fsd@1.0.0 start
+> node server.js
+
+Server running on port 5000

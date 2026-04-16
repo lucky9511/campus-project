@@ -1,4 +1,5 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
@@ -28,14 +29,21 @@ const User = mongoose.model("User", userSchema);
 
 let otpStore = {}; // store OTP temporarily
 
+const EMAIL_USER = (process.env.EMAIL_USER || "").trim();
+const EMAIL_PASS = (process.env.EMAIL_PASS || "").trim();
+
+if (!EMAIL_USER || !EMAIL_PASS) {
+    console.warn("Missing EMAIL_USER or EMAIL_PASS in backend/.env");
+}
+
 // configure email transporter
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: EMAIL_USER,
+        pass: EMAIL_PASS
     }
 });
 
@@ -51,7 +59,7 @@ app.post("/send-verification", (req, res) => {
     otpStore[email] = otp;
 
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: EMAIL_USER,
         to: email,
         subject: "Your OTP Code",
         text: `Your OTP is ${otp}`
@@ -59,13 +67,13 @@ app.post("/send-verification", (req, res) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
 
-        if(error){
-            console.log(error);
-            res.json({success:false});
+        if (error) {
+            console.log("OTP send error:", error.message);
+            res.status(500).json({ success: false, message: error.message });
         }
-        else{
+        else {
             console.log("OTP sent: " + otp);
-            res.json({success:true});
+            res.json({ success: true });
         }
 
     });

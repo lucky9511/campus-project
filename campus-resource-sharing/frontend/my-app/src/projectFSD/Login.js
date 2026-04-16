@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./project.css";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -21,7 +23,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/send-verification", {
+      const response = await fetch(`${API_URL}/send-verification`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -36,7 +38,7 @@ function Login() {
         setShowOtpField(true);
         setOtp("");
       } else {
-        alert("Failed to send OTP. Please try again.");
+        alert(data.message || "Failed to send OTP. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -57,7 +59,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/verify-otp", {
+      const response = await fetch(`${API_URL}/verify-otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

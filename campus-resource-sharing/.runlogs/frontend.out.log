@@ -1,0 +1,12 @@
+
+> campus-resource-sharing@1.0.0 start
+> npm run frontend
+
+
+> campus-resource-sharing@1.0.0 frontend
+> npm --prefix frontend/my-app start
+
+
+> my-app@0.1.0 start
+> react-scripts start
+
