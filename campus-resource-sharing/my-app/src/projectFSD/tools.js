@@ -2,215 +2,244 @@ import React, { useState } from 'react';
 import './tools.css';
 import { Link } from 'react-router-dom';
 
+const toolsData = [
+  {
+    id: 1,
+    name: "Scientific Calculator",
+    description: "Casio FX-991EX ClassWiz — perfect for engineering math, statistics, and complex number calculations.",
+    category: "calculation",
+    availability: "available",
+    quantity: 12,
+    emoji: "🧮",
+    requests: 0
+  },
+  {
+    id: 2,
+    name: "Drafter Set",
+    description: "Professional mini drafter with scale rulers, ideal for engineering drawing and architectural plans.",
+    category: "drafting",
+    availability: "available",
+    quantity: 8,
+    emoji: "📐",
+    requests: 0
+  },
+  {
+    id: 3,
+    name: "Geometry Compass",
+    description: "Precision metal compass for drawing circles and arcs. Includes pencil lead holder and extra leads.",
+    category: "drafting",
+    availability: "limited",
+    quantity: 3,
+    emoji: "🖊️",
+    requests: 0
+  },
+  {
+    id: 4,
+    name: "Physics Lab Kit",
+    description: "Complete kit with vernier caliper, screw gauge, prism, lenses, and connecting wires for practicals.",
+    category: "lab",
+    availability: "available",
+    quantity: 6,
+    emoji: "🔬",
+    requests: 0
+  },
+  {
+    id: 5,
+    name: "Chemistry Lab Equipment",
+    description: "Beakers, test tubes, burette, pipette, and flask set for chemistry experiments and titration.",
+    category: "lab",
+    availability: "limited",
+    quantity: 2,
+    emoji: "⚗️",
+    requests: 0
+  },
+  {
+    id: 6,
+    name: "Measuring Tape (30m)",
+    description: "Heavy-duty retractable 30-meter tape for surveying, civil engineering, and field measurements.",
+    category: "measurement",
+    availability: "available",
+    quantity: 10,
+    emoji: "📏",
+    requests: 0
+  },
+  {
+    id: 7,
+    name: "Protractor Set",
+    description: "Full-circle and half-circle protractor set with degree markings for precise angle measurements.",
+    category: "drafting",
+    availability: "available",
+    quantity: 15,
+    emoji: "📎",
+    requests: 0
+  },
+  {
+    id: 8,
+    name: "Multimeter",
+    description: "Digital multimeter for measuring voltage, current, and resistance in electronics and electrical labs.",
+    category: "lab",
+    availability: "unavailable",
+    quantity: 0,
+    emoji: "⚡",
+    requests: 0
+  },
+  {
+    id: 9,
+    name: "Graph Board & T-Square",
+    description: "Large drawing board with T-square for engineering graphics, technical drawing, and design work.",
+    category: "drafting",
+    availability: "limited",
+    quantity: 4,
+    emoji: "🗂️",
+    requests: 0
+  },
+  {
+    id: 10,
+    name: "Soldering Iron Kit",
+    description: "Complete soldering station with iron, solder wire, flux, and desoldering pump for electronics projects.",
+    category: "lab",
+    availability: "available",
+    quantity: 5,
+    emoji: "🔧",
+    requests: 0
+  },
+  {
+    id: 11,
+    name: "Weighing Scale",
+    description: "Precision digital weighing balance for chemistry and physics lab experiments (0.01g accuracy).",
+    category: "measurement",
+    availability: "available",
+    quantity: 4,
+    emoji: "⚖️",
+    requests: 0
+  },
+  {
+    id: 12,
+    name: "Graphing Calculator",
+    description: "TI-84 Plus CE for advanced graphing, programming, and statistical analysis in higher-level courses.",
+    category: "calculation",
+    availability: "limited",
+    quantity: 2,
+    emoji: "📟",
+    requests: 0
+  }
+];
+
+const categories = [
+  { key: "all", label: "All Tools" },
+  { key: "calculation", label: "🧮 Calculators" },
+  { key: "drafting", label: "📐 Drafting" },
+  { key: "lab", label: "🔬 Lab Equipment" },
+  { key: "measurement", label: "📏 Measurement" }
+];
+
 function Tools() {
-    // 1. Percentage Calculator State
-    const [obtainedMarks, setObtainedMarks] = useState('');
-    const [totalMarks, setTotalMarks] = useState('');
-    const [percResult, setPercResult] = useState(null);
-    const [percError, setPercError] = useState(false);
+  const [tools, setTools] = useState(toolsData);
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [toast, setToast] = useState({ show: false, message: '' });
 
-    // 2. Unit Converter State
-    const [unitValue, setUnitValue] = useState('');
-    const [conversionType, setConversionType] = useState('cm_m');
-    const [unitResult, setUnitResult] = useState(null);
-    const [unitError, setUnitError] = useState(false);
+  const showToast = (message) => {
+    setToast({ show: true, message });
+    setTimeout(() => setToast({ show: false, message: '' }), 2500);
+  };
 
-    // 3. Basic Calculator State
-    const [num1, setNum1] = useState('');
-    const [num2, setNum2] = useState('');
-    const [calcResult, setCalcResult] = useState(null);
-    const [calcError, setCalcError] = useState(false);
-
-    const calculatePercentage = () => {
-        const obtained = parseFloat(obtainedMarks);
-        const total = parseFloat(totalMarks);
-
-        if (isNaN(obtained) || isNaN(total)) {
-            setPercError(true);
-            setPercResult('Please fill in both fields with numbers.');
-            return;
-        }
-        if (total === 0) {
-            setPercError(true);
-            setPercResult('Total marks cannot be zero.');
-            return;
-        }
-
-        const percentage = ((obtained / total) * 100).toFixed(2);
-        setPercError(false);
-        setPercResult(`Result: ${percentage}%`);
-    };
-
-    const convertUnits = () => {
-        const value = parseFloat(unitValue);
-        if (isNaN(value)) {
-            setUnitError(true);
-            setUnitResult('Please enter a valid number.');
-            return;
-        }
-
-        let result = 0;
-        let resultText = '';
-
-        if (conversionType === 'cm_m') {
-            result = value / 100;
-            resultText = `${value} cm = ${result} m`;
-        } else if (conversionType === 'm_cm') {
-            result = value * 100;
-            resultText = `${value} m = ${result} cm`;
-        } else if (conversionType === 'm_km') {
-            result = value / 1000;
-            resultText = `${value} m = ${result} km`;
-        } else if (conversionType === 'km_m') {
-            result = value * 1000;
-            resultText = `${value} km = ${result} m`;
-        }
-
-        setUnitError(false);
-        setUnitResult(resultText);
-    };
-
-    const calculateBasic = (operator) => {
-        const n1 = parseFloat(num1);
-        const n2 = parseFloat(num2);
-
-        if (isNaN(n1) || isNaN(n2)) {
-            setCalcError(true);
-            setCalcResult('Please fill in both numbers.');
-            return;
-        }
-
-        let result = 0;
-        if (operator === '+') result = n1 + n2;
-        if (operator === '-') result = n1 - n2;
-        if (operator === '*') result = n1 * n2;
-        if (operator === '/') {
-            if (n2 === 0) {
-                setCalcError(true);
-                setCalcResult('Cannot divide by zero.');
-                return;
-            }
-            result = n1 / n2;
-        }
-
-        setCalcError(false);
-        setCalcResult(`Result: ${result}`);
-    };
-
-    return (
-        <>
-            <nav className="navbar">
-                <div className="logo">Campus Resource Sharing</div>
-                <ul className="nav-links" style={{ listStyle: 'none', display: 'flex', gap: '20px', margin: 0, padding: 0 }}>
-                    <li><Link to="/" style={{ color: '#555', textDecoration: 'none', fontWeight: 'bold' }}>Home</Link></li>
-                    <li><Link to="/tools" style={{ color: '#4a90e2', textDecoration: 'none', fontWeight: 'bold' }}>Tools</Link></li>
-                </ul>
-            </nav>
-
-            <div className="tools-page-container">
-                <div className="tools-header">
-                    <h1>Student Tools</h1>
-                    <p>Easy tools for everyday student needs</p>
-                </div>
-
-                <div className="tools-grid">
-                    
-                    {/* 1. Percentage Calculator */}
-                    <div className="tool-card">
-                        <h2>Percentage Calculator</h2>
-                        <div className="tool-input-group">
-                            <label>Obtained Marks</label>
-                            <input 
-                                type="number" 
-                                placeholder="e.g. 450" 
-                                value={obtainedMarks} 
-                                onChange={(e) => setObtainedMarks(e.target.value)} 
-                            />
-                        </div>
-                        <div className="tool-input-group">
-                            <label>Total Marks</label>
-                            <input 
-                                type="number" 
-                                placeholder="e.g. 500" 
-                                value={totalMarks} 
-                                onChange={(e) => setTotalMarks(e.target.value)} 
-                            />
-                        </div>
-                        <button className="btn-tool" onClick={calculatePercentage}>Calculate</button>
-                        {percResult && (
-                            <div className={`result-box ${percError ? 'error' : ''}`}>
-                                {percResult}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* 2. Unit Converter */}
-                    <div className="tool-card">
-                        <h2>Unit Converter</h2>
-                        <div className="tool-input-group">
-                            <label>Enter Value</label>
-                            <input 
-                                type="number" 
-                                placeholder="Value to convert" 
-                                value={unitValue} 
-                                onChange={(e) => setUnitValue(e.target.value)} 
-                            />
-                        </div>
-                        <div className="tool-input-group">
-                            <label>Convert</label>
-                            <select value={conversionType} onChange={(e) => setConversionType(e.target.value)}>
-                                <option value="cm_m">Centimeters to Meters</option>
-                                <option value="m_cm">Meters to Centimeters</option>
-                                <option value="m_km">Meters to Kilometers</option>
-                                <option value="km_m">Kilometers to Meters</option>
-                            </select>
-                        </div>
-                        <button className="btn-tool" onClick={convertUnits}>Convert</button>
-                        {unitResult && (
-                            <div className={`result-box ${unitError ? 'error' : ''}`}>
-                                {unitResult}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* 3. Basic Calculator */}
-                    <div className="tool-card">
-                        <h2>Basic Calculator</h2>
-                        <div className="tool-input-group">
-                            <label>First Number</label>
-                            <input 
-                                type="number" 
-                                placeholder="0" 
-                                value={num1} 
-                                onChange={(e) => setNum1(e.target.value)} 
-                            />
-                        </div>
-                        <div className="tool-input-group">
-                            <label>Second Number</label>
-                            <input 
-                                type="number" 
-                                placeholder="0" 
-                                value={num2} 
-                                onChange={(e) => setNum2(e.target.value)} 
-                            />
-                        </div>
-                        <div className="calc-btn-group">
-                            <button onClick={() => calculateBasic('+')}>Add</button>
-                            <button onClick={() => calculateBasic('-')}>Subtract</button>
-                            <button onClick={() => calculateBasic('*')}>Multiply</button>
-                            <button onClick={() => calculateBasic('/')}>Divide</button>
-                        </div>
-                        {calcResult && (
-                            <div className={`result-box ${calcError ? 'error' : ''}`}>
-                                {calcResult}
-                            </div>
-                        )}
-                    </div>
-
-                </div>
-            </div>
-        </>
+  const handleRequest = (id) => {
+    setTools(prev =>
+      prev.map(tool =>
+        tool.id === id
+          ? { ...tool, requests: tool.requests + 1 }
+          : tool
+      )
     );
+    const tool = tools.find(t => t.id === id);
+    showToast(`Request sent for "${tool.name}"!`);
+  };
+
+  const handleChat = (name) => {
+    showToast(`Chat for "${name}" — coming soon!`);
+  };
+
+  const filteredTools = activeFilter === "all"
+    ? tools
+    : tools.filter(t => t.category === activeFilter);
+
+  const badgeLabel = (status) => {
+    if (status === "available") return "✅ Available";
+    if (status === "limited") return "⚠️ Limited Stock";
+    return "❌ Unavailable";
+  };
+
+  return (
+    <div className="tools-page">
+      <nav className="tools-nav">
+        <div className="logo">Campus Resource Sharing</div>
+        <ul className="tools-nav-links">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/books">Books</Link></li>
+          <li><Link to="/notes">Notes</Link></li>
+          <li><Link to="/tools" className="active">Tools</Link></li>
+          <li><Link to="/upload">Upload</Link></li>
+        </ul>
+      </nav>
+
+      <div className="tools-hero">
+        <h1>Campus Tools & Equipment</h1>
+        <p>Borrow calculators, drafters, lab kits and more from your campus inventory.</p>
+      </div>
+
+      {/* Category Filters */}
+      <div className="tools-filter-bar">
+        {categories.map(cat => (
+          <button
+            key={cat.key}
+            className={`filter-chip ${activeFilter === cat.key ? 'active' : ''}`}
+            onClick={() => setActiveFilter(cat.key)}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Tools Grid */}
+      <div className="tools-grid">
+        {filteredTools.map(tool => (
+          <div className="tool-card" key={tool.id}>
+            <div className={`tool-card-image ${tool.category}`}>
+              {tool.emoji}
+            </div>
+            <div className="tool-card-body">
+              <h3>{tool.name}</h3>
+              <p className="tool-desc">{tool.description}</p>
+              <span className={`tool-badge ${tool.availability}`}>
+                {badgeLabel(tool.availability)}
+              </span>
+              <p className="request-count">
+                Requests: <span>{tool.requests}</span> &nbsp;|&nbsp; In Stock: <span>{tool.quantity}</span>
+              </p>
+              <div className="tool-card-footer">
+                <button
+                  className="btn-request"
+                  onClick={() => handleRequest(tool.id)}
+                  disabled={tool.availability === "unavailable"}
+                >
+                  {tool.availability === "unavailable" ? "Out of Stock" : "Request"}
+                </button>
+                <button className="btn-chat" onClick={() => handleChat(tool.name)}>
+                  💬
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Toast */}
+      <div className={`tools-toast ${toast.show ? 'show' : ''}`}>
+        <span>✅</span>
+        <span>{toast.message}</span>
+      </div>
+    </div>
+  );
 }
 
 export default Tools;
