@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./project.css";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [showOtpField, setShowOtpField] = useState(false);
@@ -72,7 +73,7 @@ function Login() {
         localStorage.setItem("userEmail", email);
 
         setTimeout(() => {
-          window.location.href = "/resources.html";
+          navigate("/");
         }, 1500);
       } else {
         setVerificationMessage("Invalid OTP. Please try again.");

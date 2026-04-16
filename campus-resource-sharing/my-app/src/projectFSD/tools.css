@@ -1,0 +1,152 @@
+/* src/projectFSD/tools.css */
+
+.tools-page-container {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px;
+    font-family: 'Inter', 'Open Sans', sans-serif;
+    color: #333;
+}
+
+.tools-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.tools-header h1 {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.tools-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.tool-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.tool-card h2 {
+    font-size: 1.4rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f1f5f9;
+    text-align: center;
+}
+
+.tool-input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.tool-input-group label {
+    font-size: 0.9rem;
+    color: #4a5568;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.tool-input-group input,
+.tool-input-group select {
+    padding: 10px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+.tool-input-group input:focus,
+.tool-input-group select:focus {
+    border-color: #4a90e2;
+    background-color: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.btn-tool {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-tool:hover {
+    box-shadow: 0 6px 15px rgba(74, 144, 226, 0.3);
+}
+
+.calc-btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.calc-btn-group button {
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calc-btn-group button:hover {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    color: #1e293b;
+}
+
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ecfdf5;
+    border: 1.5px solid #a7f3d0;
+    color: #065f46;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.result-box.error {
+    background-color: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+}

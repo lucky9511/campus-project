@@ -20,8 +20,8 @@ function FSD() {
           <ul className="nav-links">
             <li><Link to="/">Home</Link></li>
             <li><button>Resources</button></li>
-            <li><button>Tools</button></li>
-            <li><button>Upload</button></li>
+            <li><Link to="/tools">Tools</Link></li>
+            <li><Link to="/upload">Upload</Link></li>
             <li><Link to="/signup">Sign Up</Link></li>
             <li><Link to="/login">Login</Link></li>
           </ul>
@@ -66,7 +66,9 @@ function FSD() {
           <div className="card">
             <h3>🧰 Tools</h3>
             <p>Borrow tools like compass, drafter & calculators</p>
-            <button>View Tools</button>
+            <Link to="/tools">
+              <button>View Tools</button>
+            </Link>
           </div>
 
         </div>
