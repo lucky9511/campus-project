@@ -1,0 +1,96 @@
+:root {
+	--bg-1: #0d516e;
+	--bg-2: #203a43;
+	--bg-3: #2c5364;
+	--accent: #4c54af;
+}
+
+* { box-sizing: border-box; }               
+html, body { height: 100%; margin: 0; }                                     
+
+body {
+	font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+	color: #fff;
+}
+
+.login-container {
+	width: 380px;
+	max-width: 92%;
+	padding: 32px;
+	border-radius: 12px;
+	background: rgba(255,255,255,0.04);
+	backdrop-filter: blur(6px);
+	box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+	border: 1px solid rgba(255,255,255,0.06);
+}
+
+.login-container h1 {
+	margin: 0 0 18px 0;
+	font-size: 1.4rem;
+	text-align: center;
+	letter-spacing: 0.2px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+label {
+	font-size: 0.92rem;
+	margin-top: 10px;
+	margin-bottom: 6px;
+	color: #e9f2f2;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+	width: 100%;
+	padding: 12px 14px;
+	border-radius: 8px;
+	border: 1px solid rgba(255,255,255,0.12);
+	background: rgba(255,255,255,0.03);
+	color: #fff;
+	font-size: 0.95rem;
+	outline: none;
+	transition: box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+input:focus {
+	border-color: rgba(76, 120, 175, 0.95);
+	box-shadow: 0 6px 20px rgba(76,175,80,0.10);
+	background: rgba(255,255,255,0.02);
+}
+
+button[type="submit"] {
+	margin-top: 14px;
+	padding: 12px 14px;
+	border: none;
+	border-radius: 8px;
+	background: linear-gradient(90deg, var(--accent), #5f67ce);
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+	font-size: 1rem;
+	transition: transform 0.09s ease, box-shadow 0.09s ease;
+}
+
+button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(67,160,71,0.16); }
+button[type="submit"]:active { transform: translateY(0); }
+
+@media (max-width: 420px) {
+	.login-container { padding: 20px; }
+	.login-container h1 { font-size: 1.15rem; }
+}
+
+/* Utility tweaks */
+label + input { margin-top: 2px; }
+
+
