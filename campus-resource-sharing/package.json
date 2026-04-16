@@ -1,20 +1,12 @@
 {
-  "dependencies": {
-    "@react-oauth/google": "^0.13.4",
-    "body-parser": "^2.2.2",
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "jwt-decode": "^4.0.0",
-    "nodemailer": "^8.0.4"
-  },
-  "name": "js",
+  "name": "campus-resource-sharing",
   "version": "1.0.0",
-  "main": "DOM.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+    "start": "npm run frontend",
+    "frontend": "npm --prefix frontend/my-app start",
+    "backend": "npm --prefix backend start",
+    "install:frontend": "npm --prefix frontend/my-app install",
+    "install:backend": "npm --prefix backend install"
+  }
 }
