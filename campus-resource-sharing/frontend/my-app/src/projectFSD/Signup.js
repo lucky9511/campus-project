@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { sendVerification, verifyOtp } from "../api";
 import "./style.css";
 
 function Signup() {
@@ -9,7 +10,7 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation
@@ -33,16 +34,44 @@ function Signup() {
       return;
     }
 
-    // Save data to localStorage
-    localStorage.setItem("username", username);
-    localStorage.setItem("email", email);
-    localStorage.setItem("password", password);
-    localStorage.setItem("userLoggedIn", "true");
+    try {
+      // Send OTP
+      const data = await sendVerification(email);
 
-    alert("Signup successful ✅");
+      if (!data.success) {
+        alert("Failed to send OTP");
+        return;
+      }
 
-    // Redirect to dashboard page
-    navigate("/dashboard");
+      const userOtp = prompt("Enter OTP sent to your email:");
+
+      if (!userOtp) {
+        alert("OTP is required");
+        return;
+      }
+
+      // Verify OTP
+      const verify = await verifyOtp(email, userOtp);
+
+      if (!verify.success) {
+        alert("Wrong OTP");
+        return;
+      }
+
+      // Save data to localStorage
+      localStorage.setItem("username", username);
+      localStorage.setItem("email", email);
+      localStorage.setItem("password", password);
+      localStorage.setItem("userLoggedIn", "true");
+
+      alert("Signup successful ✅");
+
+      // Redirect to dashboard page
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    }
   };
 
   return (
