@@ -76,7 +76,8 @@ body {
   width: 100%;
 }
 
-.sidebar-menu li:hover, .sidebar-menu li.active {
+.sidebar-menu li:hover,
+.sidebar-menu li.active {
   background-color: var(--primary-blue);
   color: var(--white);
   box-shadow: var(--shadow-sm);
@@ -123,7 +124,7 @@ body {
 
 .banner-bg {
   height: 120px;
-  background: linear-gradient(135deg, rgba(37,99,235,0.8), rgba(30,58,138,0.8)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80') center/cover;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.8), rgba(30, 58, 138, 0.8)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80') center/cover;
 }
 
 .profile-info-container {
@@ -320,10 +321,21 @@ body {
   background-position: center;
 }
 
-.dbms-bg { background-image: url('https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=300&q=80'); }
-.dsa-bg { background-image: url('https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=300&q=80'); }
-.drafter-bg { background-image: url('https://images.unsplash.com/photo-1616628188550-808682f3926d?auto=format&fit=crop&w=300&q=80'); }
-.calc-bg { background-image: url('https://images.unsplash.com/photo-1574607383476-f517f260d30b?auto=format&fit=crop&w=300&q=80'); }
+.dbms-bg {
+  background-image: url('https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=300&q=80');
+}
+
+.dsa-bg {
+  background-image: url('https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=300&q=80');
+}
+
+.drafter-bg {
+  background-image: url('https://images.unsplash.com/photo-1616628188550-808682f3926d?auto=format&fit=crop&w=300&q=80');
+}
+
+.calc-bg {
+  background-image: url('https://images.unsplash.com/photo-1574607383476-f517f260d30b?auto=format&fit=crop&w=300&q=80');
+}
 
 .resource-details {
   padding: 12px;
@@ -369,6 +381,7 @@ body {
   font-family: inherit;
   margin-top: 4px;
 }
+
 .edit-input:focus {
   outline: none;
   border-color: var(--primary-blue);
@@ -380,7 +393,7 @@ body {
     flex-direction: column;
     overflow-y: auto;
   }
-  
+
   .sidebar-left {
     width: 100%;
     height: auto;
@@ -410,13 +423,14 @@ body {
 }
 
 @media (max-width: 768px) {
-  .sidebar-menu, .sidebar-bottom {
-    display: none; /* simple mobile hide for now */
+
+  .sidebar-menu,
+  .sidebar-bottom {
+    display: none;
+    /* simple mobile hide for now */
   }
+
   .info-cards-grid {
     grid-template-columns: 1fr;
   }
 }
-
-
-
