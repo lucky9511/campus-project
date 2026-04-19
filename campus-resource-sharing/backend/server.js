@@ -99,11 +99,11 @@ app.post("/verify-otp", async (req, res) => {
         const user = await User.findOne({ email });
 
         if (user && user.otp === userOtp.toString()) {
-            
+
             user.verified = true;
             user.otp = ""; // Clear OTP
             await user.save();
-            
+
             res.json({ success: true });
 
         } else {
@@ -116,11 +116,10 @@ app.post("/verify-otp", async (req, res) => {
 
 });
 
-
 const PORT = process.env.PORT || 5000;
-if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-}
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
 module.exports = app;
