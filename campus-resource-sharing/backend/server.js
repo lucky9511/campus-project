@@ -8,9 +8,19 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://campus-project-uorm-git-main-lucky9511s-projects.vercel.app"
+  ],
+  methods: ["GET", "POST"],
+  credentials: true
+}));
 
+app.use(bodyParser.json());
+app.get("/", (req, res) => {
+  res.send("Backend is running successfully");
+});
 const mongoUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/projectfsd";
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
