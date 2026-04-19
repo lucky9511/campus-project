@@ -37,11 +37,12 @@ function Signup() {
     localStorage.setItem("username", username);
     localStorage.setItem("email", email);
     localStorage.setItem("password", password);
+    localStorage.setItem("userLoggedIn", "true");
 
     alert("Signup successful ✅");
 
-    // Redirect to login page
-    navigate("/login");
+    // Redirect to dashboard page
+    navigate("/dashboard");
   };
 
   return (

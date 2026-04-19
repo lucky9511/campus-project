@@ -31,7 +31,7 @@ function FSD() {
           <h1>Share Books, Notes & Tools</h1>
           <p>Connect, Share & Learn Together Within Your Campus</p>
 
-          <Link to="/login">
+          <Link to="/signup">
             <button className="explore-btn">Explore Resources</button>
           </Link>
         </div>
@@ -40,7 +40,7 @@ function FSD() {
 
       {/* RESOURCES SECTION */}
       <section className="resources">
-        <h2 style={{ color: "#1e293b" }}>
+        <h2 style={{ color: "#ffffff" }}>
   Explore Campus Resources
 </h2>
 

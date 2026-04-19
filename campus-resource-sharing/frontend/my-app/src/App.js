@@ -6,6 +6,7 @@ import Books from "./projectFSD/books";
 import Notes from "./projectFSD/notes";
 import Upload from "./projectFSD/upload";
 import Tools from "./projectFSD/tools";
+import Dashboard from "./projectFSD/Dashboard";
 
 const ProtectedRoute = ({ children }) => {
   const isAuth = localStorage.getItem("userLoggedIn") === "true";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<FSD />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/books" element={<ProtectedRoute><Books /></ProtectedRoute>} />
         <Route path="/notes" element={<ProtectedRoute><Notes /></ProtectedRoute>} />
         <Route path="/upload" element={<ProtectedRoute><Upload /></ProtectedRoute>} />

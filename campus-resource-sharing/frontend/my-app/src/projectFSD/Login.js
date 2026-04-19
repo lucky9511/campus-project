@@ -75,7 +75,7 @@ function Login() {
         localStorage.setItem("userEmail", email);
 
         setTimeout(() => {
-          navigate("/");
+          navigate("/dashboard");
         }, 1500);
       } else {
         setVerificationMessage("Invalid OTP. Please try again.");

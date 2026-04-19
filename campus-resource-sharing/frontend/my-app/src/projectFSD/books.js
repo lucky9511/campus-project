@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 function Books() {
@@ -39,9 +40,24 @@ function Books() {
         background: "#0f3d4c",
         minHeight: "100vh",
         padding: "40px",
+        paddingTop: "100px"
       }}
     >
-      <h2 style={{ color: "black", textAlign: "center" }}>
+      <nav className="navbar" style={{ background: "#1e293b", position: "fixed", top: 0, left: 0, zIndex: 10 }}>
+        <div className="logo">
+          Campus Resource Sharing & Optimization Platform
+        </div>
+        <ul className="nav-links">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/dashboard">Dashboard</Link></li>
+          <li><Link to="/tools">Tools</Link></li>
+          <li><Link to="/upload">Upload</Link></li>
+          <li><Link to="/signup">Sign Up</Link></li>
+          <li><Link to="/login">Login</Link></li>
+        </ul>
+      </nav>
+
+      <h2 style={{ color: "white", textAlign: "center" }}>
         Books Section 📚
       </h2>
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 function Notes() {
@@ -20,7 +21,21 @@ function Notes() {
   );
 
   return (
-    <div className="resources">
+    <div className="resources" style={{ minHeight: "100vh", background: "#f8fafc", paddingTop: "100px" }}>
+      <nav className="navbar" style={{ background: "#1e293b", position: "fixed", top: 0, left: 0, zIndex: 10 }}>
+        <div className="logo">
+          Campus Resource Sharing & Optimization Platform
+        </div>
+        <ul className="nav-links">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/dashboard">Dashboard</Link></li>
+          <li><Link to="/tools">Tools</Link></li>
+          <li><Link to="/upload">Upload</Link></li>
+          <li><Link to="/signup">Sign Up</Link></li>
+          <li><Link to="/login">Login</Link></li>
+        </ul>
+      </nav>
+
      <h2 style={{ color: "#1e293b" }}>
   Notes Section 📝
 </h2>
