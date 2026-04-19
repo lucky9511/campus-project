@@ -22,12 +22,11 @@ mongoose.connect(mongoUri, {
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     verified: { type: Boolean, default: false },
+    otp: { type: String }, // Store OTP securely
     createdAt: { type: Date, default: Date.now }
 });
 
 const User = mongoose.model("User", userSchema);
-
-let otpStore = {}; // store OTP temporarily
 
 const EMAIL_USER = (process.env.EMAIL_USER || "").trim();
 const EMAIL_PASS = (process.env.EMAIL_PASS || "").trim();
@@ -49,14 +48,23 @@ const transporter = nodemailer.createTransport({
 
 
 // SEND OTP
-app.post("/send-verification", (req, res) => {
+app.post("/send-verification", async (req, res) => {
 
     const email = req.body.email;
 
     // generate 6 digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    otpStore[email] = otp;
+    try {
+        await User.findOneAndUpdate(
+            { email },
+            { email, otp },
+            { upsert: true }
+        );
+    } catch (saveError) {
+        console.error("Failed to save OTP to database:", saveError);
+        return res.status(500).json({ success: false, message: "Database error" });
+    }
 
     const mailOptions = {
         from: EMAIL_USER,
@@ -87,26 +95,23 @@ app.post("/verify-otp", async (req, res) => {
     const userOtp = req.body.otp;
     const email = req.body.email;
 
-    if (otpStore[email] == userOtp) {
+    try {
+        const user = await User.findOne({ email });
 
-        delete otpStore[email];
-
-        try {
-            await User.findOneAndUpdate(
-                { email },
-                { email, verified: true },
-                { upsert: true, new: true }
-            );
+        if (user && user.otp === userOtp.toString()) {
+            
+            user.verified = true;
+            user.otp = ""; // Clear OTP
+            await user.save();
+            
             res.json({ success: true });
-        } catch (error) {
-            console.error("Failed to save user:", error);
-            res.status(500).json({ success: false, error: "Database error" });
+
+        } else {
+            res.json({ success: false });
         }
-
-    } else {
-
-        res.json({success:false});
-
+    } catch (error) {
+        console.error("Error during verification:", error);
+        res.status(500).json({ success: false, error: "Database error" });
     }
 
 });
