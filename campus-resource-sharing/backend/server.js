@@ -11,6 +11,8 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:3000",
+    "https://campus-project-we1i.vercel.app",
+    "https://campus-project-uorm.vercel.app",
     "https://campus-project-uorm-git-main-lucky9511s-projects.vercel.app"
   ],
   methods: ["GET", "POST"],
