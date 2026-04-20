@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { sendVerification, verifyOtp } from "../api";
 import "./project.css";
-
-const API_URL =
-  process.env.REACT_APP_API_URL || "https://campus-project-5.onrender.com";
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [showOtpField, setShowOtpField] = useState(false);
   const [verificationMessage, setVerificationMessage] = useState("");
@@ -21,18 +20,18 @@ function Login() {
       return;
     }
 
+    const storedEmail = localStorage.getItem("email");
+    const storedPassword = localStorage.getItem("password");
+
+    if (email !== storedEmail || password !== storedPassword) {
+      alert("Invalid email or password!");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/send-verification`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await response.json();
+      const data = await sendVerification(email);
 
       if (data.success) {
         alert("OTP sent to your email. Please check and enter the OTP.");
@@ -60,15 +59,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/verify-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ otp, email })
-      });
-
-      const data = await response.json();
+      const data = await verifyOtp(email, otp);
 
       if (data.success) {
         setVerificationMessage("OTP Verified Successfully! Logging in...");
@@ -102,6 +93,15 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              required
+            />
+
+            <label>Password :</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
               required
             />
 

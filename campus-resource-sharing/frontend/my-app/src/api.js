@@ -1,4 +1,4 @@
-const BASE_URL = "https://campus-project-5.onrender.com";
+const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 export const sendVerification = async (email) => {
   const res = await fetch(`${BASE_URL}/send-verification`, {
